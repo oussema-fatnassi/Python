@@ -2,8 +2,6 @@ import tkinter as tk
 import tkinter.font as tkFont
 import tkinter.messagebox
 
-# DEMANDER POUR RECUPERER LA VARIABLE STR
-
 class Difficulty():
     
     def __init__(self):
@@ -11,7 +9,7 @@ class Difficulty():
         self.y = 0
 
     def update_menubutton_text(self, *args):
-        self.difficulty = self.diff_selection
+        self.difficulty = self.diff_selection.get()
         self.diff_button.config(text=f"Difficulté : {self.difficulty}")
 
     def difficulty_choice(self):
@@ -41,22 +39,20 @@ class Difficulty():
         
         self.x=5
         self.y=5
-        if self.difficulty.get() == "Facile":
+        if self.difficulty == "Facile":
             self.x = 10
             self.y = 5
-        elif self.difficulty.get() == "Moyen":
+        elif self.difficulty == "Moyen":
             self.x = 10
             self.y = 10
-        elif self.difficulty.get() == "Difficile":
+        elif self.difficulty == "Difficile":
             self.x = 15
             self.y = 10
-
+        
         for i in range(self.y):
             for j in range(self.x):
                 b = tk.Button(self.root, image=self.blank_image,
                                 font=self.font, compound=tk.CENTER)
-
-            # get the height of the font to use as the square size
                 square_size = self.font.metrics('linespace')
                 b.config(width=square_size, height=square_size)
 
