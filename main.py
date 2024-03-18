@@ -33,24 +33,21 @@ class Difficulty():
         btn = tk.Button(self.root1, text="Confirmer", command=self.root1.destroy)
         btn.pack()
         self.root1.mainloop()
-        
-        # tk.messagebox.showinfo("Choix de la difficulté : ")
-        return self.difficulty
 
-    def creation_grid(self, a):
+    def creation_grid(self):
         self.root = tk.Tk()
         self.font = tkFont.Font(family="Helvetica", size=20, weight = tkFont.BOLD)
         self.blank_image = tk.PhotoImage()
         
         self.x=5
         self.y=5
-        if a == "Facile":
+        if self.difficulty.get() == "Facile":
             self.x = 10
             self.y = 5
-        elif a == "Moyen":
+        elif self.difficulty.get() == "Moyen":
             self.x = 10
             self.y = 10
-        elif a == "Difficile":
+        elif self.difficulty.get() == "Difficile":
             self.x = 15
             self.y = 10
 
@@ -68,4 +65,5 @@ class Difficulty():
         self.root.mainloop()
         
 test = Difficulty()
-test.creation_grid(test.difficulty_choice())
+test.difficulty_choice()
+test.creation_grid()
