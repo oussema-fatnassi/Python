@@ -32,6 +32,9 @@ image1 = pygame.transform.scale(image1, (WIDTH, HEIGHT))
 image_flag = pygame.image.load("flag.png")
 image_flag = pygame.transform.scale(image_flag, (WIDTH, HEIGHT))
 
+# Create a matrix to store flag states, 2D list with FALSE values
+flags = [[False] * 9 for _ in range(9)]
+
 # Main
 while running:
     for event in pygame.event.get():
@@ -52,14 +55,20 @@ while running:
                 pos = pygame.mouse.get_pos()
                 column = pos[0] // (WIDTH + MARGIN)
                 row = pos[1] // (HEIGHT + MARGIN)
-                screen.blit(image_flag, ((MARGIN + WIDTH) * column + MARGIN, (MARGIN + HEIGHT) * row + MARGIN))
+                print("Right click", pos, "Grid coordinates", row, column)
+
+                # Toggle flag state
+                flags[row][column] = not flags[row][column]
 
     screen.fill("grey")
 
     # create grid
     for row in range(9):
         for column in range(9):
-            screen.blit(button_image, ((MARGIN + WIDTH) * column + MARGIN, (MARGIN + HEIGHT) * row + MARGIN))
+            if flags[row][column]:      #verify if flag is in position row column
+                screen.blit(image_flag, ((MARGIN + WIDTH) * column + MARGIN, (MARGIN + HEIGHT) * row + MARGIN))
+            else:
+                screen.blit(button_image, ((MARGIN + WIDTH) * column + MARGIN, (MARGIN + HEIGHT) * row + MARGIN))
 
     pygame.display.update()
     clock.tick(60)  # limit to 60 FPS
