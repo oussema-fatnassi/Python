@@ -1,4 +1,7 @@
 import random
+import pygame
+from pygame.locals import *
+
 
 class Case():
     
@@ -23,7 +26,7 @@ class Case():
     def flag(self, event):                  # Sous-programme drapeau si clique droit ou '?' si déjà un drapeau
         print("Test clique droit",event.num)
         if self.flag_var == 0:
-            # Image drapeau
+            self.screen.blit(self.image_flag, ((self.MARGIN + self.WIDTH) * self.x + self.MARGIN, (self.MARGIN + self.HEIGHT) * self.y + self.MARGIN))
             print("Test drapeau affiché")
             self.flag_var = 1
         elif self.flag_var == 1:
@@ -58,11 +61,11 @@ class Case():
     def question_mark(self):                # Sous-programme qui affiche '?' ou rien si déjà '?'
         print("Test arrivée sur ?")
         if self.question_mark_var == 0:
-            # Affichage '?'
+            self.screen.blit(self.image_question_mark, ((self.MARGIN + self.WIDTH) * self.x + self.MARGIN, (self.MARGIN + self.HEIGHT) * self.y + self.MARGIN))
             print("Test affichage ?")
             self.question_mark_var = 1
         elif self.question_mark_var == 1:
-            # Affichage ' '
+            self.screen.blit(self.image_button, ((self.MARGIN + self.WIDTH) * self.x + self.MARGIN, (self.MARGIN + self.HEIGHT) * self.y + self.MARGIN))
             print("Retour affichage vide")
             self.flag_var = 0
             self.question_mark_var = 0
