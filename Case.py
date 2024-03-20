@@ -1,16 +1,19 @@
 import random
+import pygame
+from pygame.locals import *
+from GUI import GUI_class
 
-class Case():
+class Case_class(GUI_class):
     
     def __init__(self):
         self.flag_var = 0
         self.question_mark_var = 0
     
     def check_bomb(self, co_x, co_y):       # Sous-programme qui check si la case est une bombe
-        if self.dict_cases[(co_x,co_y)] == 'X':
+        if self.Matrice_case[co_y][co_x] == 'X':
             self.game_over()     
-        elif self.dict_cases[(co_x,co_y)] == '.':
-            self.verification_case  
+        elif self.Matrice_case[co_y][co_x] == '.':
+            self.verification_case(self.x,self.y)  
     
     def clique(self, event):                # Récupération localisation de la case
         print("Case cliquée : ",event.num)
@@ -18,12 +21,12 @@ class Case():
             # timer() lancement du timer
             self.plant_bombs()
         else:
-            self.check_bomb()
+            self.check_bomb(self.x,self.y)
     
     def flag(self, event):                  # Sous-programme drapeau si clique droit ou '?' si déjà un drapeau
         print("Test clique droit",event.num)
         if self.flag_var == 0:
-            # Image drapeau
+            self.screen.blit(self.image_flag, ((self.MARGIN + self.WIDTH) * self.x + self.MARGIN, (self.MARGIN + self.HEIGHT) * self.y + self.MARGIN))
             print("Test drapeau affiché")
             self.flag_var = 1
         elif self.flag_var == 1:
@@ -47,22 +50,22 @@ class Case():
                 a = random.randint(0,100)
                 if a <= 15:
                     print("BOMBE")
-                    self.dict_cases[(i,j)] = 'X'
+                    self.Matrice_case[i][j] = 'X'
                     self.cpt_cases_mined += 1
                 elif a > 15:
                     print("PAS DE BOMBE")
-                    self.dict_cases[(i,j)] = '.'
+                    self.Matrice_case[i][j] = '.'
                     self.cpt_cases_demined += 1
-            print(self.dict_cases[(i,j)])
+            print(self.Matrice_case[i][j])
     
     def question_mark(self):                # Sous-programme qui affiche '?' ou rien si déjà '?'
         print("Test arrivée sur ?")
         if self.question_mark_var == 0:
-            # Affichage '?'
+            self.screen.blit(self.image_question_mark, ((self.MARGIN + self.WIDTH) * self.x + self.MARGIN, (self.MARGIN + self.HEIGHT) * self.y + self.MARGIN))
             print("Test affichage ?")
             self.question_mark_var = 1
         elif self.question_mark_var == 1:
-            # Affichage ' '
+            self.screen.blit(self.image_button, ((self.MARGIN + self.WIDTH) * self.x + self.MARGIN, (self.MARGIN + self.HEIGHT) * self.y + self.MARGIN))
             print("Retour affichage vide")
             self.flag_var = 0
             self.question_mark_var = 0
@@ -74,7 +77,7 @@ class Case():
         self.question_mark_var = a
         
     def bomb_or_not(self, co_x, co_y):      # Sous-programme qui permet de compter les bombes autour
-        if self.dict_cases[(co_x,co_y)] == 'X':
+        if self.Matrice_case[co_y][co_x] == 'X':
             return 1
         else:
             return 0
@@ -106,7 +109,8 @@ class Case():
             + self.bomb_or_not(co_x +1,co_y) + self.bomb_or_not(co_x +1,co_y +1) + self.bomb_or_not(co_x,co_y +1) + self.bomb_or_not(co_x -1,co_y +1)
         
         if cpt == 0:                                # Si 0 bombe autour, check les cases autour
-            self.dict_cases[(co_x,co_y)] = '0'
+            self.Matrice_case[co_y][co_x] = '0'
+            self.screen.blit(self.image_empty, ((self.MARGIN + self.WIDTH) * self.x + self.MARGIN , (self.MARGIN + self.HEIGHT) * self.y + self.MARGIN ))                     
             self.check_bomb(co_x -1,co_y)
             self.check_bomb(co_x -1,co_y -1)
             self.check_bomb(co_x,co_y -1)
@@ -116,18 +120,30 @@ class Case():
             self.check_bomb(co_x,co_y +1)
             self.check_bomb(co_x -1,co_y +1)
         elif cpt == 1:                              # Si bombe alors affiche le nombre et stop
-            self.dict_cases[(co_x,co_y)] = '1'
+            self.Matrice_case[co_y][co_x] = '1'
+            self.screen.blit(self.image1, ((self.MARGIN + self.WIDTH) * self.x + self.MARGIN , (self.MARGIN + self.HEIGHT) * self.y + self.MARGIN ))                     
         elif cpt == 2:
-            self.dict_cases[(co_x,co_y)] = '2'
+            self.Matrice_case[co_y][co_x] = '2'
+            self.screen.blit(self.image2, ((self.MARGIN + self.WIDTH) * self.x + self.MARGIN , (self.MARGIN + self.HEIGHT) * self.y + self.MARGIN ))                     
         elif cpt == 3:
-            self.dict_cases[(co_x,co_y)] = '3'
+            self.Matrice_case[co_y][co_x] = '3'
+            self.screen.blit(self.image3, ((self.MARGIN + self.WIDTH) * self.x + self.MARGIN , (self.MARGIN + self.HEIGHT) * self.y + self.MARGIN ))
         elif cpt == 4:
-            self.dict_cases[(co_x,co_y)] = '4'
+            self.Matrice_case[co_y][co_x] = '4'
+            self.screen.blit(self.image4, ((self.MARGIN + self.WIDTH) * self.x + self.MARGIN , (self.MARGIN + self.HEIGHT) * self.y + self.MARGIN ))
         elif cpt == 5:
-            self.dict_cases[(co_x,co_y)] = '5'
+            self.Matrice_case[co_y][co_x] = '5'
+            self.screen.blit(self.image5, ((self.MARGIN + self.WIDTH) * self.x + self.MARGIN , (self.MARGIN + self.HEIGHT) * self.y + self.MARGIN ))
         elif cpt == 6:
-            self.dict_cases[(co_x,co_y)] = '6'
+            self.Matrice_case[co_y][co_x] = '6'
+            self.screen.blit(self.image6, ((self.MARGIN + self.WIDTH) * self.x + self.MARGIN , (self.MARGIN + self.HEIGHT) * self.y + self.MARGIN ))
         elif cpt == 7:
-            self.dict_cases[(co_x,co_y)] = '7'
+            self.Matrice_case[co_y][co_x] = '7'
+            self.screen.blit(self.image7, ((self.MARGIN + self.WIDTH) * self.x + self.MARGIN , (self.MARGIN + self.HEIGHT) * self.y + self.MARGIN ))
         elif cpt == 8:
-            self.dict_cases[(co_x,co_y)] = '8'           
+            self.Matrice_case[co_y][co_x] = '8'
+            self.screen.blit(self.image8, ((self.MARGIN + self.WIDTH) * self.x + self.MARGIN , (self.MARGIN + self.HEIGHT) * self.y + self.MARGIN )) 
+
+
+GUI = GUI()
+GUI.main()
