@@ -14,10 +14,13 @@ RED = (255, 0, 0)
 BLACK = (0, 0, 0)
 
 def timer(time):
+    time_str = "{:03d}".format(time)
     font = pygame.font.Font("DS-DIGIT.TTF", 100)
-    text = font.render(str(time), True, RED)
+    text = font.render(time_str, True, RED)
     text_rect = text.get_rect(center=(WIDTH // 2, HEIGHT // 2))
+    screen.fill(BLACK)
     screen.blit(text, text_rect)
+    pygame.display.update(text_rect)
 
 def main():
     start = time.time()
