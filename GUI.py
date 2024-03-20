@@ -5,8 +5,8 @@ class GUI():
     
     def __init__(self):
         pygame.init()               # Initialisation pygame
-        self.screen_width = 300
-        self.screen_height = 300
+        self.screen_width = 700
+        self.screen_height = 700
         self.screen = pygame.display.set_mode((self.screen_width, self.screen_height))
         pygame.display.set_caption("MINESWEEPER")
         self.clock = pygame.time.Clock()
@@ -15,12 +15,23 @@ class GUI():
         self.HEIGHT = 30
         self.MARGIN = 0
 
-        self.Matrice_case = []                  # Initilisation de la matrice qui garde les valeurs des cases
-        for row in range(9):
-            self.Matrice_case.append([])
-            for col in range(9):
-                self.Matrice_case[row].append('')
+        self.x = 0           #pos x et y dans la matrice
+        self.y = 0
+        self.cpt_cases_mined = 0
+        self.cpt_cases_demined = 0
+        self.x_max = 9       #max taille difficulty
+        self.y_max = 9
 
+        self.Matrice_case = []                  # Initilisation de la matrice qui garde les valeurs des cases
+        for row in range(self.y_max): 
+            self.Matrice_case.append([])
+            for col in range(self.x_max): 
+                self.Matrice_case[row].append('')
+    
+    def pos_case(self):
+        pos = pygame.mouse.get_pos()
+        self.x = pos[0] // (self.WIDTH + self.MARGIN)
+        self.y = pos[1] // (self.HEIGHT + self.MARGIN) 
 
     def load_images(self):                      # Sous-programme pour load les images et les scale à la bonne taille
         
@@ -53,36 +64,41 @@ class GUI():
         self.image_final_bomb = pygame.image.load("final_bomb.png")
         self.image_final_bomb = pygame.transform.scale(self.image_final_bomb, (self.WIDTH, self.HEIGHT))
 
-    def main(self):                             # Programme main
-        flags = [["none"] * 9 for _ in range(9)]
-
+    def init_grille(self):                             # Programme main
+        
+        '''case_instance = Case()
+        
         self.load_images()
 
         while self.running:
+            self.pos_case()
+
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     self.running = False
                 elif event.type == pygame.MOUSEBUTTONDOWN:
                     if event.button == 1:           # Left click
                         pos = pygame.mouse.get_pos()                        # Récupère la position du clique
-                        column = pos[0] // (self.WIDTH + self.MARGIN)       # Récupère la position dans la grille comme entier
-                        row = pos[1] // (self.HEIGHT + self.MARGIN)
-                        print("Left Click ", pos, "Matrice_case coordinates: ", row, column)
-                        self.clique(event)
+                        if self.x >= 0 and self.x < self.x_max and self.y >= 0 and self.y < self.y_max:                 # Check position mouse dans la grille
+                            print("Left Click ", pos, "Matrice_case coordinates: ", self.x, self.y)
+                            case_instance.clique()
+                        else:
+                            break
+
+                        
                     elif event.button == 3:         # Right click
                         pos = pygame.mouse.get_pos()
-                        column = pos[0] // (self.WIDTH + self.MARGIN)
-                        row = pos[1] // (self.HEIGHT + self.MARGIN)
-                        print("Right click", pos, "Matrice_case coordinates", row, column)
-                        self.flag.event(event)
-
-            self.screen.fill("grey")
-            for i in range(9):
-                for j in range(9):
-                    self.screen.blit(self.image_button, ((self.MARGIN + self.WIDTH) * j + self.MARGIN, (self.MARGIN + self.HEIGHT) * i + self.MARGIN))                     
-            pygame.display.update()
-            self.clock.tick(60)                     # limit to 60 FPS
-        pygame.quit()
-
-GUI = GUI()
-GUI.main()
+                        
+                        if self.x >= 0 and self.x < self.x_max and self.y >= 0 and self.y < self.y_max:                 # Check position mouse dans la grille
+                            print("Right click", pos, "Matrice_case coordinates", self.x, self.y)
+                            case_instance.flag.event()
+                        else:
+                            break'''
+        #self.load_images()
+        self.screen.fill("grey")
+        for i in range(9):
+            for j in range(9):
+                self.screen.blit(self.image_button, ((self.MARGIN + self.WIDTH) * j + self.MARGIN , (self.MARGIN + self.HEIGHT) * i + self.MARGIN ))                     
+        pygame.display.flip()
+        self.clock.tick(60)                     # limit to 60 FPS
+        #pygame.quit()

@@ -1,63 +1,44 @@
-import tkinter as tk
-import tkinter.font as tkFont
-import tkinter.messagebox
+from GUI import GUI
+from Case import Case
+#from Difficulty import Difficulty
 
-class Difficulty():
+import random
+import pygame
+from pygame.locals import *
+
+
+def main(GUI):
+    case_instance = Case()
+    GUI.init_grille()
     
-    def __init__(self):
-        self.x = 0
-        self.y = 0
 
-    def update_menubutton_text(self, *args):        # Sous-programme pour afficher la difficulté correctemnt
-        self.difficulty = self.diff_selection.get()
-        self.diff_button.config(text=f"Difficulté : {self.difficulty}")
+    while GUI.running:
+        GUI.pos_case()
 
-    def difficulty_choice(self):                    # Programme pour afficher la fenêtre de choix de la difficulté
-        
-        self.root1 = tk.Tk()
-        self.root1.geometry("200x200")
-        self.label = tk.Label(self.root1, text="Choix de la difficulté : ")
-        self.label.pack()
-        self.diff_selection = tk.StringVar()        # Init variable diff
-        self.diff_button = tk.Menubutton(self.root1, text="Difficulté ?")       # Init menu déroulant
-        self.menu = tk.Menu(self.diff_button, tearoff=False)
-        self.diff_button["menu"] = self.menu
-        self.menu.add_command(label="Facile" , command=lambda: self.diff_selection.set("Facile"))
-        self.menu.add_command(label="Moyen" , command=lambda: self.diff_selection.set("Moyen"))
-        self.menu.add_command(label="Difficile" , command=lambda: self.diff_selection.set("Difficile"))
-        self.diff_button.pack()
-        self.diff_selection = tk.StringVar()
-        self.diff_selection.trace_add("write", self.update_menubutton_text)     # Lancement sous-programme affichage correct
-        btn = tk.Button(self.root1, text="Confirmer", command=self.root1.destroy)
-        btn.pack()
-        self.root1.mainloop()
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                GUI.running = False
+            elif event.type == pygame.MOUSEBUTTONDOWN:
+                if event.button == 1:           # Left click
+                    pos = pygame.mouse.get_pos()                        # Récupère la position du clique
+                    if GUI.x >= 0 and GUI.x < GUI.x_max and GUI.y >= 0 and GUI.y < GUI.y_max:                 # Check position mouse dans la grille
+                        print("Left Click ", pos, "Matrice_case coordinates: ", GUI.x, GUI.y)
+                        #GUI.pos_case()
+                        case_instance.clique()
+                    else:
+                        break
 
-    def creation_grid(self):                # Création de la grille de boutons
-        self.root = tk.Tk()
-        self.font = tkFont.Font(family="Helvetica", size=20, weight = tkFont.BOLD)
-        self.blank_image = tk.PhotoImage()
-        
-        if self.difficulty == "Facile":     # Changement de la taille suivant la difficulté
-            self.x = 10
-            self.y = 5
-        elif self.difficulty == "Moyen":
-            self.x = 10
-            self.y = 10
-        elif self.difficulty == "Difficile":
-            self.x = 15
-            self.y = 10
-        
-        for i in range(self.y):
-            for j in range(self.x):
-                b = tk.Button(self.root, image=self.blank_image,
-                                font=self.font, compound=tk.CENTER)
-                square_size = self.font.metrics('linespace')
-                b.config(width=square_size, height=square_size)
+                    
+                elif event.button == 3:         # Right click
+                    pos = pygame.mouse.get_pos()
+                    
+                    if GUI.x >= 0 and GUI.x < GUI.x_max and GUI.y >= 0 and GUI.y < GUI.y_max:                 # Check position mouse dans la grille
+                        print("Right click", pos, "Matrice_case coordinates", GUI.x, GUI.y)
+                        case_instance.flag()
+                    else:
+                        break
+    pygame.quit()
 
-                b.grid(row = i, column = j, sticky = "NWSE")
-
-        self.root.mainloop()
-        
-test = Difficulty()
-test.difficulty_choice()
-test.creation_grid()
+GUI = GUI()
+GUI.load_images()
+main(GUI)
