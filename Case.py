@@ -7,16 +7,20 @@ class Case(GUI):
     
     def __init__(self):
         super().__init__()
+        self.load_images()
         self.flag_var = 0
         self.question_mark_var = 0
     
     def check_bomb(self, co_x, co_y):       # Sous-programme qui check si la case est une bombe
+        #co_x = int(co_x)
+        #co_y = int(co_y)
         if self.Matrice_case[co_y][co_x] == 'X':
             self.game_over()     
         elif self.Matrice_case[co_y][co_x] == '.':
             self.verification_case(self.x,self.y)  
     
     def clique(self):                # Récupération localisation de la case
+        self.pos_case()
         print("Case cliquée : ")
         if self.cpt_cases_mined == 0:
             # timer() lancement du timer
@@ -25,9 +29,12 @@ class Case(GUI):
             self.check_bomb(self.x,self.y)
     
     def flag(self):                  # Sous-programme drapeau si clique droit ou '?' si déjà un drapeau
+        self.pos_case()
         print("Test clique droit")
         if self.flag_var == 0:
             self.screen.blit(self.image_flag, ((self.MARGIN + self.WIDTH) * self.x + self.MARGIN, (self.MARGIN + self.HEIGHT) * self.y + self.MARGIN))
+            pygame.display.update()
+
             print("Test drapeau affiché")
             self.flag_var = 1
         elif self.flag_var == 1:
@@ -35,6 +42,8 @@ class Case(GUI):
     
     def game_over(self):                    # Sous-programme en cas de défaite
         print("Test game over")
+        self.screen.blit(self.image_bomb, ((self.MARGIN + self.WIDTH) * self.x + self.MARGIN, (self.MARGIN + self.HEIGHT) * self.y + self.MARGIN))
+        pygame.display.update()
         # Ça finit le jeu avec un message de défaite
         # Ça ferme la fenêtre et revient au choix de la difficulté
         pass
@@ -49,24 +58,28 @@ class Case(GUI):
         for i in range(y):
             for j in range(x):
                 a = random.randint(0,100)
-                if a <= 15:
+                if a <= 40:
                     print("BOMBE")
                     self.Matrice_case[i][j] = 'X'
                     self.cpt_cases_mined += 1
-                elif a > 15:
+                elif a > 40:
                     print("PAS DE BOMBE")
                     self.Matrice_case[i][j] = '.'
                     self.cpt_cases_demined += 1
-            print(self.Matrice_case[i][j])
+        print(self.Matrice_case)
+        self.check_bomb(self.x,self.y)
     
     def question_mark(self):                # Sous-programme qui affiche '?' ou rien si déjà '?'
+        self.pos_case()
         print("Test arrivée sur ?")
         if self.question_mark_var == 0:
             self.screen.blit(self.image_question_mark, ((self.MARGIN + self.WIDTH) * self.x + self.MARGIN, (self.MARGIN + self.HEIGHT) * self.y + self.MARGIN))
+            pygame.display.update()
             print("Test affichage ?")
             self.question_mark_var = 1
         elif self.question_mark_var == 1:
             self.screen.blit(self.image_button, ((self.MARGIN + self.WIDTH) * self.x + self.MARGIN, (self.MARGIN + self.HEIGHT) * self.y + self.MARGIN))
+            pygame.display.update()
             print("Retour affichage vide")
             self.flag_var = 0
             self.question_mark_var = 0
@@ -84,6 +97,7 @@ class Case(GUI):
             return 0
     
     def verification_case(self, co_x, co_y):        # Sous-programme qui vérifie et compte les cases bombes autour avant de changer la case
+
         cpt = 0
         if co_x == 0 and co_y == 0:                             # Coin haut gauche
             cpt = self.bomb_or_not(co_x +1,co_y) + self.bomb_or_not(co_x +1,co_y +1) + self.bomb_or_not(co_x,co_y +1)
@@ -108,7 +122,7 @@ class Case(GUI):
         else:                                                   # Case random au milieu
             cpt = self.bomb_or_not(co_x -1,co_y) + self.bomb_or_not(co_x -1,co_y -1) + self.bomb_or_not(co_x,co_y -1) + self.bomb_or_not(co_x +1,co_y -1)
             + self.bomb_or_not(co_x +1,co_y) + self.bomb_or_not(co_x +1,co_y +1) + self.bomb_or_not(co_x,co_y +1) + self.bomb_or_not(co_x -1,co_y +1)
-        
+        print(cpt)
         if cpt == 0:                                # Si 0 bombe autour, check les cases autour
             self.Matrice_case[co_y][co_x] = '0'
             self.screen.blit(self.image_empty, ((self.MARGIN + self.WIDTH) * self.x + self.MARGIN , (self.MARGIN + self.HEIGHT) * self.y + self.MARGIN ))                     
@@ -144,3 +158,5 @@ class Case(GUI):
         elif cpt == 8:
             self.Matrice_case[co_y][co_x] = '8'
             self.screen.blit(self.image8, ((self.MARGIN + self.WIDTH) * self.x + self.MARGIN , (self.MARGIN + self.HEIGHT) * self.y + self.MARGIN )) 
+
+        pygame.display.update()

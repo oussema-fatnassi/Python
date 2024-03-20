@@ -15,8 +15,8 @@ class GUI():
         self.HEIGHT = 30
         self.MARGIN = 0
 
-        self.x = None           #pos x et y dans la matrice
-        self.y = None
+        self.x = 0           #pos x et y dans la matrice
+        self.y = 0
         self.cpt_cases_mined = 0
         self.cpt_cases_demined = 0
         self.x_max = 9       #max taille difficulty
@@ -94,11 +94,10 @@ class GUI():
                             case_instance.flag.event()
                         else:
                             break'''
-        self.load_images()
+        #self.load_images()
         self.screen.fill("grey")
         for i in range(9):
             for j in range(9):
-                print("c")
                 self.screen.blit(self.image_button, ((self.MARGIN + self.WIDTH) * j + self.MARGIN , (self.MARGIN + self.HEIGHT) * i + self.MARGIN ))                     
         pygame.display.flip()
         self.clock.tick(60)                     # limit to 60 FPS
