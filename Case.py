@@ -1,11 +1,12 @@
 import random
 import pygame
 from pygame.locals import *
-from GUI import GUI_class
+from GUI import GUI
 
-class Case_class(GUI_class):
+class Case(GUI):
     
     def __init__(self):
+        super().__init__()
         self.flag_var = 0
         self.question_mark_var = 0
     
@@ -15,16 +16,16 @@ class Case_class(GUI_class):
         elif self.Matrice_case[co_y][co_x] == '.':
             self.verification_case(self.x,self.y)  
     
-    def clique(self, event):                # Récupération localisation de la case
-        print("Case cliquée : ",event.num)
+    def clique(self):                # Récupération localisation de la case
+        print("Case cliquée : ")
         if self.cpt_cases_mined == 0:
             # timer() lancement du timer
-            self.plant_bombs()
+            self.plant_bombs(self.y_max,self.x_max)
         else:
             self.check_bomb(self.x,self.y)
     
-    def flag(self, event):                  # Sous-programme drapeau si clique droit ou '?' si déjà un drapeau
-        print("Test clique droit",event.num)
+    def flag(self):                  # Sous-programme drapeau si clique droit ou '?' si déjà un drapeau
+        print("Test clique droit")
         if self.flag_var == 0:
             self.screen.blit(self.image_flag, ((self.MARGIN + self.WIDTH) * self.x + self.MARGIN, (self.MARGIN + self.HEIGHT) * self.y + self.MARGIN))
             print("Test drapeau affiché")
@@ -44,9 +45,9 @@ class Case_class(GUI_class):
         # Ça ferme la fenêtre et revient au choix de la difficulté
         pass
     
-    def plant_bombs(self):                  # Sous-programme qui plante les bombes au hasard et compte les cases
-        for i in range(self.y):
-            for j in range(self.x):
+    def plant_bombs(self,y,x):                  # Sous-programme qui plante les bombes au hasard et compte les cases
+        for i in range(y):
+            for j in range(x):
                 a = random.randint(0,100)
                 if a <= 15:
                     print("BOMBE")
@@ -143,7 +144,3 @@ class Case_class(GUI_class):
         elif cpt == 8:
             self.Matrice_case[co_y][co_x] = '8'
             self.screen.blit(self.image8, ((self.MARGIN + self.WIDTH) * self.x + self.MARGIN , (self.MARGIN + self.HEIGHT) * self.y + self.MARGIN )) 
-
-
-GUI = GUI()
-GUI.main()

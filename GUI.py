@@ -1,6 +1,5 @@
 import pygame
 from pygame.locals import *
-from Case import Case
 
 class GUI():
     
@@ -65,9 +64,9 @@ class GUI():
         self.image_final_bomb = pygame.image.load("final_bomb.png")
         self.image_final_bomb = pygame.transform.scale(self.image_final_bomb, (self.WIDTH, self.HEIGHT))
 
-    def main(self):                             # Programme main
+    def init_grille(self):                             # Programme main
         
-        case_instance = Case()
+        '''case_instance = Case()
         
         self.load_images()
 
@@ -94,15 +93,14 @@ class GUI():
                             print("Right click", pos, "Matrice_case coordinates", self.x, self.y)
                             case_instance.flag.event()
                         else:
-                            break
+                            break'''
+        self.load_images()
+        self.screen.fill("grey")
+        for i in range(9):
+            for j in range(9):
+                print("c")
+                self.screen.blit(self.image_button, ((self.MARGIN + self.WIDTH) * j + self.MARGIN , (self.MARGIN + self.HEIGHT) * i + self.MARGIN ))                     
+        pygame.display.flip()
+        self.clock.tick(60)                     # limit to 60 FPS
+        #pygame.quit()
 
-            self.screen.fill("grey")
-            for i in range(9):
-                for j in range(9):
-                    self.screen.blit(self.image_button, ((self.MARGIN + self.WIDTH) * j + self.MARGIN , (self.MARGIN + self.HEIGHT) * i + self.MARGIN ))                     
-            pygame.display.update()
-            self.clock.tick(60)                     # limit to 60 FPS
-        pygame.quit()
-
-GUI = GUI()
-GUI.main()
