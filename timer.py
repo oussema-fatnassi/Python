@@ -1,26 +1,35 @@
+import pygame
+import sys
+import time
 
-import time 
-self.start_time = None # variable
-self.timer_running = False  # variable
+pygame.init()
 
+BLANC = "white"
+NOIR = "black"
 
-def start_timer(self):    #   Cette fonction démarre le chronomètre si ce dernier n'est pas déjà en cours d'exécution.
-    if not self.timer_running:
-        self.start_time = time.time()
-        self.timer_running = True
-        self.update_timer()
+largeur = 400
+hauteur = 400
+taille_case = 20
 
-def update_timer(self):  # Cette fonction est appelée récursivement pour mettre à jour l'affichage du chronomètre chaque seconde. 
-    if self.timer_running:
-        elapsed_time = round(time.time() - self.start_time)
-        self.timer_label.config(text="Temps écoulé : " + str(elapsed_time))
-        self.root.after(1000, self.update_timer)
-    
-def on_cell_click(self, event):  # Cette fonction est appelée lorsqu'un bouton de la grille est cliqué.  
-    if not self.timer_running:
-        self.start_timer()
+fenetre = pygame.display.set_mode((largeur, hauteur))
+pygame.display.set_caption("Mineweeper")
 
-    b.bind("<Button-1>", self.on_cell_click) # lie un événement à une fonction dans Tkinter.
+def afficher_chronometre(temps):
+    font = pygame.font.Font(None, 36)
+    texte = font.render("Temps : " + str(temps), True, NOIR)
+    fenetre.blit(texte, (10, 10))
 
-    self.timer_label = tk.Label(self.root, text="Temps écoulé: 0")
-    self.timer_label.grid(row=self.y, columnspan=self.x, sticky="W")
+def mineweeper():
+    debut = time.time()
+    while True:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+                
+        temps_ecoule = int(time.time() - debut)
+
+        fenetre.fill(BLANC)
+        afficher_chronometre(temps_ecoule)
+        pygame.display.flip()
+mineweeper()
