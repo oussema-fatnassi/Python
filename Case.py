@@ -16,6 +16,8 @@ class Case(GUI):
             self.game_over()     
         elif self.Matrice_case[co_y][co_x] == '.':
             self.verification_case(self.x,self.y)  
+        else:
+            pass
     
     def clique(self):                # Récupération localisation de la case
         self.pos_case()
@@ -57,11 +59,11 @@ class Case(GUI):
                 a = random.randint(0,100)
                 if i == self.y and j == self.x:
                     self.Matrice_case[i][j] = '.'
-                elif a <= 30:
+                elif a <= 20:
                     # print("BOMBE")
                     self.Matrice_case[i][j] = 'X'
                     self.cpt_cases_mined += 1
-                elif a > 30:
+                elif a > 20:
                     # print("PAS DE BOMBE")
                     self.Matrice_case[i][j] = '.'
                     self.cpt_cases_demined += 1
@@ -92,44 +94,76 @@ class Case(GUI):
         cpt = 0
         if co_x == 0 and co_y == 0:                             # Coin haut gauche
             cpt = self.bomb_or_not(co_x +1,co_y) + self.bomb_or_not(co_x +1,co_y +1) + self.bomb_or_not(co_x,co_y +1)
-            print("coin gauche ",cpt,co_x,co_y)
         elif co_x == (self.x_max -1) and co_y == 0:                 # Coin haut droit
             cpt = self.bomb_or_not(co_x -1,co_y) + self.bomb_or_not(co_x -1,co_y +1) + self.bomb_or_not(co_x,co_y +1)
-            print("coin droit ",cpt)
         elif co_x == 0 and co_y == (self.y_max -1):                 # Coin bas gauche
             cpt = self.bomb_or_not(co_x +1,co_y) + self.bomb_or_not(co_x +1,co_y -1) + self.bomb_or_not(co_x,co_y -1)
-            print("coin gauche bas ",cpt)
         elif co_x == (self.x_max -1) and co_y == (self.y_max -1):       # Coin bas droit
             cpt = self.bomb_or_not(co_x -1,co_y) + self.bomb_or_not(co_x -1,co_y -1) + self.bomb_or_not(co_x,co_y -1)
-            print("coin droit bas ",cpt)
         elif co_x == 0:                                         # Côté gauche de la grille
             cpt = self.bomb_or_not(co_x,co_y -1) + self.bomb_or_not(co_x +1,co_y -1) + self.bomb_or_not(co_x +1,co_y) + self.bomb_or_not(co_x +1,co_y +1) + self.bomb_or_not(co_x,co_y +1)
-            print("cote gauche ",cpt)
         elif co_y == 0:                                         # Côté haut de la grille
             cpt = self.bomb_or_not(co_x -1,co_y) + self.bomb_or_not(co_x -1,co_y +1) + self.bomb_or_not(co_x,co_y +1) + self.bomb_or_not(co_x +1,co_y +1) + self.bomb_or_not(co_x +1,co_y)
-            print("cote haut ",cpt)
         elif co_x == (self.x_max -1):                               # Côté droit de la grille
             cpt = self.bomb_or_not(co_x,co_y -1) + self.bomb_or_not(co_x -1,co_y -1) + self.bomb_or_not(co_x -1,co_y) + self.bomb_or_not(co_x -1,co_y +1) + self.bomb_or_not(co_x,co_y +1)
-            print("cote droit ",cpt)
         elif co_y == (self.y_max -1):                               # Côté bas de la grille
             cpt = self.bomb_or_not(co_x -1,co_y) + self.bomb_or_not(co_x -1,co_y -1) + self.bomb_or_not(co_x,co_y -1) + self.bomb_or_not(co_x +1,co_y -1) + self.bomb_or_not(co_x +1,co_y)
-            print("cote bas ",cpt)
         else:                                                   # Case random au milieu
             cpt = self.bomb_or_not(co_x -1,co_y) + self.bomb_or_not(co_x -1,co_y -1) + self.bomb_or_not(co_x,co_y -1) + self.bomb_or_not(co_x +1,co_y -1) + self.bomb_or_not(co_x +1,co_y) + self.bomb_or_not(co_x +1,co_y +1) + self.bomb_or_not(co_x,co_y +1) + self.bomb_or_not(co_x -1,co_y +1)
-            print("random ",cpt,co_x,co_y)
         # print(cpt)
         if cpt == 0:                                # Si 0 bombe autour, check les cases autour
             self.Matrice_case[co_y][co_x] = '0'
             self.screen.blit(self.image_empty, ((self.MARGIN + self.WIDTH) * self.x + self.MARGIN , (self.MARGIN + self.HEIGHT) * self.y + self.MARGIN ))                     
             pygame.display.update()
-            self.check_bomb(co_x -1,co_y)
-            self.check_bomb(co_x -1,co_y -1)
-            self.check_bomb(co_x,co_y -1)
-            self.check_bomb(co_x +1,co_y -1)
-            self.check_bomb(co_x +1,co_y)
-            self.check_bomb(co_x +1,co_y +1)
-            self.check_bomb(co_x,co_y +1)
-            self.check_bomb(co_x -1,co_y +1)
+            if co_x == 0 and co_y == 0:                             # Coin haut gauche
+                self.check_bomb(co_x +1,co_y)
+                self.check_bomb(co_x +1,co_y +1)
+                self.check_bomb(co_x,co_y +1)
+            elif co_x == (self.x_max -1) and co_y == 0:                 # Coin haut droit
+                self.check_bomb(co_x -1,co_y)
+                self.check_bomb(co_x -1,co_y +1)
+                self.check_bomb(co_x,co_y +1)
+            elif co_x == 0 and co_y == (self.y_max -1):                 # Coin bas gauche
+                self.check_bomb(co_x +1,co_y)
+                self.check_bomb(co_x +1,co_y -1)
+                self.check_bomb(co_x,co_y -1)
+            elif co_x == (self.x_max -1) and co_y == (self.y_max -1):       # Coin bas droit
+                self.check_bomb(co_x -1,co_y)
+                self.check_bomb(co_x -1,co_y -1)
+                self.check_bomb(co_x,co_y -1)
+            elif co_x == 0:                                         # Côté gauche de la grille
+                self.check_bomb(co_x,co_y -1)
+                self.check_bomb(co_x +1,co_y -1)
+                self.check_bomb(co_x +1,co_y)
+                self.check_bomb(co_x +1,co_y +1)
+                self.check_bomb(co_x,co_y +1)
+            elif co_y == 0:                                         # Côté haut de la grille
+                self.check_bomb(co_x -1,co_y)
+                self.check_bomb(co_x -1,co_y +1)
+                self.check_bomb(co_x,co_y +1)
+                self.check_bomb(co_x +1,co_y +1)
+                self.check_bomb(co_x +1,co_y)
+            elif co_x == (self.x_max -1):                               # Côté droit de la grille
+                self.check_bomb(co_x,co_y -1)
+                self.check_bomb(co_x -1,co_y -1)
+                self.check_bomb(co_x -1,co_y)
+                self.check_bomb(co_x -1,co_y +1)
+                self.check_bomb(co_x,co_y +1)
+            elif co_y == (self.y_max -1):                               # Côté bas de la grille
+                self.check_bomb(co_x -1,co_y)
+                self.check_bomb(co_x -1,co_y -1)
+                self.check_bomb(co_x,co_y -1)
+                self.check_bomb(co_x +1,co_y -1)
+                self.check_bomb(co_x +1,co_y)
+            else:                                                   # Case random au milieu
+                self.check_bomb(co_x -1,co_y)
+                self.check_bomb(co_x -1,co_y -1)
+                self.check_bomb(co_x,co_y -1)
+                self.check_bomb(co_x +1,co_y -1)
+                self.check_bomb(co_x +1,co_y)
+                self.check_bomb(co_x +1,co_y +1)
+                self.check_bomb(co_x,co_y +1)
+                self.check_bomb(co_x -1,co_y +1)
         elif cpt == 1:                              # Si bombe alors affiche le nombre et stop
             self.Matrice_case[co_y][co_x] = '1'
             self.screen.blit(self.image1, ((self.MARGIN + self.WIDTH) * self.x + self.MARGIN , (self.MARGIN + self.HEIGHT) * self.y + self.MARGIN ))                     
