@@ -1,15 +1,16 @@
 from GUI import GUI
 from Case import Case
-#from Difficulty import Difficulty
+from Difficulty import Difficulty
+import sys
 
 import random
 import pygame
 from pygame.locals import *
 
 
-def main(GUI):
+def main(GUI, difficulty_choice):
     case_instance = Case()
-    GUI.init_grille()
+    GUI.init_grille(difficulty_choice)
     
 
     while GUI.running:
@@ -39,6 +40,10 @@ def main(GUI):
                         break
     pygame.quit()
 
+Difficulty_instance = Difficulty()
+Difficulty_instance.main_menu()
+print("im in difficulty")
+print(Difficulty_instance.difficulty_choice)
 GUI = GUI()
 GUI.load_images()
-main(GUI)
+main(GUI, Difficulty_instance.difficulty_choice)

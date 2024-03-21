@@ -1,5 +1,6 @@
 import pygame
 from pygame.locals import *
+from Difficulty import Difficulty
 
 class GUI():
     
@@ -19,8 +20,9 @@ class GUI():
         self.y = 0
         self.cpt_cases_mined = 0
         self.cpt_cases_demined = 0
-        self.x_max = 9       #max taille difficulty
-        self.y_max = 9
+        self.x_max = 0       #max taille difficulty
+        self.y_max = 0
+
 
         self.Matrice_case = []                  # Initilisation de la matrice qui garde les valeurs des cases
         for row in range(self.y_max): 
@@ -64,42 +66,30 @@ class GUI():
         self.image_final_bomb = pygame.image.load("final_bomb.png")
         self.image_final_bomb = pygame.transform.scale(self.image_final_bomb, (self.WIDTH, self.HEIGHT))
 
-    def init_grille(self):                             # Programme main
+    def init_grille(self, difficulty):                             # Programme main
         
-        '''case_instance = Case()
-        
-        self.load_images()
+        if difficulty == "easy":
+            self.x_max = 9
+            self.y_max = 9
+            print("im in easy init grille")
+        elif difficulty == "medium":
+            self.x_max = 16
+            self.y_max = 16
+            print("im in medium init grille")
+        elif difficulty == "hard":
+            self.x_max = 30
+            self.y_max = 16
+            print("im in hard init grille")
+        else:
+            self.x_max = 9
+            self.y_max = 9
+            print("im in else init grille")
 
-        while self.running:
-            self.pos_case()
-
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    self.running = False
-                elif event.type == pygame.MOUSEBUTTONDOWN:
-                    if event.button == 1:           # Left click
-                        pos = pygame.mouse.get_pos()                        # Récupère la position du clique
-                        if self.x >= 0 and self.x < self.x_max and self.y >= 0 and self.y < self.y_max:                 # Check position mouse dans la grille
-                            print("Left Click ", pos, "Matrice_case coordinates: ", self.x, self.y)
-                            case_instance.clique()
-                        else:
-                            break
-
-                        
-                    elif event.button == 3:         # Right click
-                        pos = pygame.mouse.get_pos()
-                        
-                        if self.x >= 0 and self.x < self.x_max and self.y >= 0 and self.y < self.y_max:                 # Check position mouse dans la grille
-                            print("Right click", pos, "Matrice_case coordinates", self.x, self.y)
-                            case_instance.flag.event()
-                        else:
-                            break'''
         #self.load_images()
         self.screen.fill("grey")
-        for i in range(9):
-            for j in range(9):
+        for i in range(self.y_max):
+            for j in range(self.x_max):
                 self.screen.blit(self.image_button, ((self.MARGIN + self.WIDTH) * j + self.MARGIN , (self.MARGIN + self.HEIGHT) * i + self.MARGIN ))                     
         pygame.display.flip()
         self.clock.tick(60)                     # limit to 60 FPS
         #pygame.quit()
-
