@@ -27,11 +27,8 @@ def main(GUI):
                         case_instance.clique()
                     else:
                         break
-
-                    
                 elif event.button == 3:         # Right click
                     pos = pygame.mouse.get_pos()
-                    
                     if GUI.x >= 0 and GUI.x < GUI.x_max and GUI.y >= 0 and GUI.y < GUI.y_max:                 # Check position mouse dans la grille
                         print("Right click", pos, "Matrice_case coordinates", GUI.x, GUI.y)
                         case_instance.flag()

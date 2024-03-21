@@ -14,7 +14,7 @@ class GUI():
         self.WIDTH = 30
         self.HEIGHT = 30
         self.MARGIN = 0
-
+        self.game_lost = False
         self.x = 0           #pos x et y dans la matrice
         self.y = 0
         self.cpt_cases_mined = 0
@@ -66,34 +66,6 @@ class GUI():
 
     def init_grille(self):                             # Programme main
         
-        '''case_instance = Case()
-        
-        self.load_images()
-
-        while self.running:
-            self.pos_case()
-
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    self.running = False
-                elif event.type == pygame.MOUSEBUTTONDOWN:
-                    if event.button == 1:           # Left click
-                        pos = pygame.mouse.get_pos()                        # Récupère la position du clique
-                        if self.x >= 0 and self.x < self.x_max and self.y >= 0 and self.y < self.y_max:                 # Check position mouse dans la grille
-                            print("Left Click ", pos, "Matrice_case coordinates: ", self.x, self.y)
-                            case_instance.clique()
-                        else:
-                            break
-
-                        
-                    elif event.button == 3:         # Right click
-                        pos = pygame.mouse.get_pos()
-                        
-                        if self.x >= 0 and self.x < self.x_max and self.y >= 0 and self.y < self.y_max:                 # Check position mouse dans la grille
-                            print("Right click", pos, "Matrice_case coordinates", self.x, self.y)
-                            case_instance.flag.event()
-                        else:
-                            break'''
         #self.load_images()
         self.screen.fill("grey")
         for i in range(9):
