@@ -45,10 +45,10 @@ class Case(GUI):
         self.screen.blit(self.image_bomb, ((self.MARGIN + self.WIDTH) * self.x + self.MARGIN, (self.MARGIN + self.HEIGHT) * self.y + self.MARGIN))
         pygame.display.update()
         self.game_lost = True
-        for i in range(self.y_max):
-            for j in range(self.x_max):
-                self.check_bomb(j,i)
-            print(self.Matrice_case[i])
+        # for i in range(self.y_max):
+        #     for j in range(self.x_max):
+        #         self.check_bomb(j,i)
+        #     print(self.Matrice_case[i])
         # Ça finit le jeu avec un message de défaite
         # Ça ferme la fenêtre et revient au choix de la difficulté
     
@@ -139,41 +139,42 @@ class Case(GUI):
         if self.Matrice_case[co_y][co_x] == '0':
             if co_x -1 >= 0:
                 self.check_bomb(co_x -1, co_y)
-            if co_x -1 >= 0 and co_y -1 >= 0:
-                self.check_bomb(co_x -1, co_y -1)
+            # if co_x -1 >= 0 and co_y -1 >= 0:
+            #     self.check_bomb(co_x -1, co_y -1)
             if co_y -1 >= 0:
                 self.check_bomb(co_x , co_y -1)
-            if co_x +1 >= 0 and co_y -1 >= 0:
-                self.check_bomb(co_x +1, co_y -1)
+            # if co_x +1 >= 0 and co_y -1 >= 0:
+            #     self.check_bomb(co_x +1, co_y -1)
             if co_x +1 >= 0:
                 self.check_bomb(co_x +1, co_y)
-            if co_x +1 >= 0 and co_y +1 >= 0:
-                self.check_bomb(co_x +1, co_y +1)
+            # if co_x +1 >= 0 and co_y +1 >= 0:
+            #     self.check_bomb(co_x +1, co_y +1)
             if co_y +1 >= 0:
                 self.check_bomb(co_x , co_y +1)
-            if co_x -1 >= 0 and co_y +1 >= 0:
-                self.check_bomb(co_x -1, co_y +1)
+            # if co_x -1 >= 0 and co_y +1 >= 0:
+            #     self.check_bomb(co_x -1, co_y +1)
         elif self.Matrice_case[co_y][co_x] == ('1' or '2' or '3' or '4' or '5' or '6' or '7' or '8' or 'X'):
             return
-        self.revele(co_x,co_y)
-        if self.Matrice_case[co_y][co_x] == ('1' or '2' or '3' or '4' or '5' or '6' or '7' or '8' or 'X'):
-            return
-        if co_x -1 >= 0:
-            self.check_bomb(co_x -1, co_y)
-        if co_x -1 >= 0 and co_y -1 >= 0:
-            self.check_bomb(co_x -1, co_y -1)
-        if co_y -1 >= 0:
-            self.check_bomb(co_x , co_y -1)
-        if co_x +1 >= 0 and co_y -1 >= 0:
-            self.check_bomb(co_x +1, co_y -1)
-        if co_x +1 >= 0:
-            self.check_bomb(co_x +1, co_y)
-        if co_x +1 >= 0 and co_y +1 >= 0:
-            self.check_bomb(co_x +1, co_y +1)
-        if co_y +1 >= 0:
-            self.check_bomb(co_x , co_y +1)
-        if co_x -1 >= 0 and co_y +1 >= 0:
-            self.check_bomb(co_x -1, co_y +1)
+        else:
+            self.revele(co_x,co_y)
+            if self.Matrice_case[co_y][co_x] == ('1' or '2' or '3' or '4' or '5' or '6' or '7' or '8' or 'X'):
+                return
+            if co_x -1 >= 0:
+                self.check_bomb(co_x -1, co_y)
+            # if co_x -1 >= 0 and co_y -1 >= 0:
+            #     self.check_bomb(co_x -1, co_y -1)
+            if co_y -1 >= 0:
+                self.check_bomb(co_x , co_y -1)
+            # if co_x +1 >= 0 and co_y -1 >= 0:
+            #     self.check_bomb(co_x +1, co_y -1)
+            if co_x +1 >= 0:
+                self.check_bomb(co_x +1, co_y)
+            # if co_x +1 >= 0 and co_y +1 >= 0:
+            #     self.check_bomb(co_x +1, co_y +1)
+            if co_y +1 >= 0:
+                self.check_bomb(co_x , co_y +1)
+            # if co_x -1 >= 0 and co_y +1 >= 0:
+            #     self.check_bomb(co_x -1, co_y +1)
     
     def verification_case(self, co_x, co_y):        # Sous-programme qui vérifie et compte les cases bombes autour avant de changer la case
 
@@ -200,7 +201,7 @@ class Case(GUI):
         if cpt == 0:                                # Si 0 bombe autour, check les cases autour
             self.Matrice_case[co_y][co_x] = '0'
             self.screen.blit(self.image_empty, ((self.MARGIN + self.WIDTH) * self.x + self.MARGIN , (self.MARGIN + self.HEIGHT) * self.y + self.MARGIN ))
-            self.diffusion(co_x,co_y)
+            self.diffusion(co_x+1,co_y)
 
         elif cpt == 1:                              # Si bombe alors affiche le nombre et stop
             self.Matrice_case[co_y][co_x] = '1'
