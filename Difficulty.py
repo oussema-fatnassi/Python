@@ -17,13 +17,13 @@ class Difficulty():
         screen = pygame.display.set_mode((self.screen_width, self.screen_height))
         screen.fill("black")
 
-        self.play_button = pygame.Rect(self.screen_width // 2 - 250 // 2, 200, 250, 50)               # Creation des boutons pour le menu
+        self.play_button = pygame.Rect(self.screen_width // 2 - 250 // 2, 200, 250, 50)                 # Menu button creation
         self.difficulty_button = pygame.Rect(self.screen_width // 2 - 250 // 2, 300, 250, 50)
         self.quit_button = pygame.Rect(self.screen_width // 2 - 250 // 2, 400, 250, 50)
 
         self.custom_font = pygame.font.Font("mine-sweeper.ttf", 36)
 
-        self.minesweeper_text = self.custom_font.render("Minesweeper", True, (255, 255, 255))      # Creation du texte pour le menu
+        self.minesweeper_text = self.custom_font.render("Minesweeper", True, (255, 255, 255))          # Minesweeper text creation
         self.minesweeper_text = pygame.transform.scale(self.minesweeper_text, (350, 100))
         self.play_button_text = self.custom_font.render("PLAY", True, (255, 255, 255))
         self.difficulty_button_text = self.custom_font.render("DIFFICULTY", True, (255, 255, 255))
@@ -42,7 +42,7 @@ class Difficulty():
         pygame.display.update()
         self.click_controller()
         
-    def click_controller(self):                 # Controller pour les clicks
+    def click_controller(self):                 
 
         hovered = False
         play = 0
@@ -96,19 +96,12 @@ class Difficulty():
                 
         print("im out of loop")
 
-    # def play_game(self):
-        #print("Play game")
-        #print("Difficulty selected:", self.difficulty_choice)
-        #pygame.quit()
-    #    pass
-
-    def difficulty_menu(self):                          # Menu pour choisir la difficulté
+    def difficulty_menu(self):                          # Difficulty menu
         print("Difficulty menu")
         pygame.display.set_caption("Difficulty Menu")
         custom_font = pygame.font.Font("mine-sweeper.ttf", 36)
 
         self.screen.fill(((0,0,0)))
-        #self.screen.fill("black")
 
         self.easy_button = pygame.Rect(self.screen_width // 2 - 250 // 2, 50, 250, 50)
         self.medium_button = pygame.Rect(self.screen_width // 2 - 250 // 2, 100, 250, 50)
