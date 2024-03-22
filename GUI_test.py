@@ -17,15 +17,15 @@ class GUI():
         self.HEIGHT = 30
         self.MARGIN = 0
 
-        self.x = 0           #pos x et y dans la matrice
+        self.x = 0                                              # Position of the case
         self.y = 0
         self.cpt_cases_mined = 0
         self.cpt_cases_demined = 0
-        self.x_max = 30       #max taille difficulty
+        self.x_max = 30                                         # Size of the grid
         self.y_max = 16
 
-        self.first_click = False        # Variable pour le premier clique
-        self.start_time = 0             # Variable pour le timer
+        self.first_click = False                                # Variable for the first click
+        self.start_time = 0                                     # Variable for the timer
         self.RED = (255, 0, 0)
         self.BLACK = (0, 0, 0)
         clock = pygame.time.Clock()
@@ -33,7 +33,7 @@ class GUI():
         self.screen = pygame.display.set_mode((self.screen_width, self.screen_height))
 
 
-        self.Matrice_case = []                  # Initilisation de la matrice qui garde les valeurs des cases
+        self.Matrice_case = []                                  # Initialisation of the grid
         for row in range(self.y_max): 
             self.Matrice_case.append([])
             for col in range(self.x_max): 
@@ -44,7 +44,7 @@ class GUI():
         self.x = pos[0] // (self.WIDTH + self.MARGIN)
         self.y = pos[1] // (self.HEIGHT + self.MARGIN) 
 
-    def load_images(self):                      # Sous-programme pour load les images et les scale à la bonne taille
+    def load_images(self):                                      # Load all the images
         
         self.image_button = pygame.image.load("button.png")
         self.image_button = pygame.transform.scale(self.image_button, (self.WIDTH, self.HEIGHT))
@@ -77,14 +77,8 @@ class GUI():
         self.image_reset = pygame.image.load("reset.png")
         self.image_reset = pygame.transform.scale(self.image_reset, (self.WIDTH*1.5, self.HEIGHT*1.5))
 
-    def start_timer(self):
-        self.start_time = time.time()  # Launcement du timer
-
-    def get_elapsed_time(self):
-        return int(time.time() - self.start_time)  # Calcule du temps écoulé
-
     def timer_gui(self, time):
-        time_str = "{:03d}".format(time // 1000)  # Conversion en secondes
+        time_str = "{:03d}".format(time // 1000)                # Display the timer
         font = pygame.font.Font("DS-DIGIT.TTF", 50)
         text = font.render(time_str, True, self.RED)
         text_rect = text.get_rect(center=(self.screen_width -45, self.screen_height -30))  # Positionnement du timer
@@ -133,7 +127,7 @@ class GUI():
         elif difficulty == "hard":
             return "hard"
 
-    def init_grille(self, chosen_difficulty):                             # Initialisation de la grille en fonction de la difficulté
+    def init_grille(self, chosen_difficulty):                             # Initialisation of the grid and change the size of the window after the difficulty choice
         self.difficulty = self.return_choice(chosen_difficulty)
         self.select_difficulty((self.difficulty))
         
