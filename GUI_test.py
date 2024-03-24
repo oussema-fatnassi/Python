@@ -133,7 +133,6 @@ class GUI():
         
         self.screen = pygame.display.set_mode((self.screen_width, self.screen_height))
 
-        #self.load_images()
         self.screen.fill("grey")
         for i in range(self.y_max):
             for j in range(self.x_max):
@@ -143,19 +142,26 @@ class GUI():
         self.screen.blit(self.image_reset, (self.screen_width // 2 - self.image_reset.get_width() // 2, self.screen_height - self.image_reset.get_height() - 10))  # Position reset button below the grid
         
         self.timer_gui(0)
-        #self.cpt_cases_mined()
         pygame.display.update()
-        #pygame.display.flip()
         self.clock.tick(60)                     # limit to 60 FPS
 
-    def reset_game(self):
-        #self.screen.fill("grey")
-        for i in range(self.y_max):
+    def reset_game(self):                                                     
+        self.Matrice_case = []                      # Reinitialisation of the grid
+        for row in range(self.y_max): 
+            self.Matrice_case.append([])
+            for col in range(self.x_max): 
+                self.Matrice_case[row].append('')
+        
+        self.cpt_cases_mined = 0                    # Reinitialisation of the variables
+        self.cpt_cases_demined = 0
+        self.first_click = False
+        self.start_time = 0
+
+        for i in range(self.y_max):                 # Redraw the grid and reset button
             for j in range(self.x_max):
-                self.screen.blit(self.image_button, ((self.MARGIN + self.WIDTH) * j + self.MARGIN , (self.MARGIN + self.HEIGHT) * i + self.MARGIN ))                     
-        self.timer_gui(0)
-        #self.cpt_cases_mined()
+                self.screen.blit(self.image_button, ((self.MARGIN + self.WIDTH) * j + self.MARGIN , (self.MARGIN + self.HEIGHT) * i + self.MARGIN ))
+        self.screen.blit(self.image_reset, (self.screen_width // 2 - self.image_reset.get_width() // 2, self.screen_height - self.image_reset.get_height() - 10))
+        self.timer_gui(0)                           # Reset the timer
         pygame.display.update()
-        self.clock.tick(60)                     # limit to 60 FPS
-
+        self.clock.tick(60)  
 pygame.quit()

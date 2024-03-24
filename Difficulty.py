@@ -22,9 +22,6 @@ class Difficulty():
         self.medium_button = pygame.Rect(self.screen_width // 2 - 250 // 2, 100, 250, 50)
         self.back_button = pygame.Rect(self.screen_width // 2 - 250 // 2, 350, 250, 50)
 
-
-
-
     def main_menu(self):
         screen = pygame.display.set_mode((self.screen_width, self.screen_height))
         screen.fill("black")
