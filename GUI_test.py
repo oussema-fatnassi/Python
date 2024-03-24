@@ -99,25 +99,25 @@ class GUI():
             self.y_max = 9
             self.screen_width = 270
             self.screen_height = 330    
-            print("im in easy init grille")
+            print("im in easy init grid")
         elif difficulty_choice == "medium":
             self.x_max = 16
             self.y_max = 16
             self.screen_width = 480
             self.screen_height = 540
-            print("im in medium init grille")
+            print("im in medium init grid")
         elif difficulty_choice == "hard":
             self.x_max = 30
             self.y_max = 16
             self.screen_width = 900
             self.screen_height = 540
-            print("im in hard init grille")
+            print("im in hard init grid")
         else:
-            self.x_max = 9
-            self.y_max = 9
-            self.screen_width = 270
-            self.screen_height = 330  
-            print("im in else init grille")
+           self.x_max = 9
+           self.y_max = 9
+           self.screen_width = 270
+           self.screen_height = 330  
+           print("im in else init grid")
 
     def return_choice(self, difficulty):
         if difficulty == "easy":
@@ -127,11 +127,11 @@ class GUI():
         elif difficulty == "hard":
             return "hard"
 
-    def init_grille(self, chosen_difficulty):                             # Initialisation of the grid and change the size of the window after the difficulty choice
+    def init_grid(self, chosen_difficulty):                             # Initialisation of the grid and change the size of the window after the difficulty choice
         self.difficulty = self.return_choice(chosen_difficulty)
         self.select_difficulty((self.difficulty))
         
-        #self.screen = pygame.display.set_mode((self.screen_width, self.screen_height))
+        self.screen = pygame.display.set_mode((self.screen_width, self.screen_height))
 
         #self.load_images()
         self.screen.fill("grey")

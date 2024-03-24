@@ -6,41 +6,79 @@ from Difficulty import Difficulty
 
 class Case(GUI):
     
-    def __init__(self):
+    def __init__(self, chosen_difficulty):                                          # Receive chosen difficulty level
         super().__init__()
         self.load_images()
         self.flag_var = 0
         self.question_mark_var = 0
+        self.chosen_difficulty = chosen_difficulty                                  # Store chosen difficulty level
+        self.init_grid()                                                            # Initialize grid based on difficulty level
     
-    def check_bomb(self, co_x, co_y):                       # Function that checks if the case is a bomb or not
+    def init_grid(self):
+        if self.chosen_difficulty == "easy":                                        # Initialize other variables for easy difficulty
+            self.x_max = 9
+            self.y_max = 9
+            self.screen_width = 270
+            self.screen_height = 330
+        elif self.chosen_difficulty == "medium":                                    # Initialize other variables for medium difficulty
+            self.x_max = 16
+            self.y_max = 16
+            self.screen_width = 480
+            self.screen_height = 540
+        elif self.chosen_difficulty == "hard":                                      # Initialize other variables for hard difficulty
+            self.x_max = 30
+            self.y_max = 16
+            self.screen_width = 900
+            self.screen_height = 540
+        else:                                                                       # Initialize other variables for default difficulty                
+            self.x_max = 9
+            self.y_max = 9
+            self.screen_width = 270
+            self.screen_height = 330
+        self.screen = pygame.display.set_mode((self.screen_width, self.screen_height))  # Adjust screen size
+        self.Matrice_case = []                                                          # Initialisation of the grid
+        for row in range(self.y_max): 
+            self.Matrice_case.append([])
+            for col in range(self.x_max): 
+                self.Matrice_case[row].append('')
+    
+    def check_bomb(self, co_x, co_y):                                                   # Function that checks if the case is a bomb or not
         if (co_x >= 0 and co_x < self.x_max) and (co_y >= 0 and co_y < self.y_max):
-            if self.Matrice_case[co_y][co_x] == 'X':        # If it is a bomb then game over
+            if self.Matrice_case[co_y][co_x] == 'X':                                    # If it is a bomb then game over
                 self.Matrice_case[co_y][co_x] = 'x'
                 self.game_over()
             else:
-                if self.Matrice_case[co_y][co_x] != '0':    # If the case has any value other than 0 it will show the image of that value
+                if self.Matrice_case[co_y][co_x] != '0':                                # If the case has any value other than 0 it will show the image of that value
                     self.show(co_x,co_y)
                     self.Matrice_case[co_y][co_x] = '9'
                 else:
-                    self.recursivity(co_x,co_y)             # If the value is 0 then it launches the function recursivity
+                    self.recursivity(co_x,co_y)                                         # If the value is 0 then it launches the function recursivity
 
     def clique(self):                               # Function for each left click
         self.pos_case()
-        if self.cpt_cases_mined == 0:       # Case for the first click
+        if self.cpt_cases_mined == 0:               # Case for the first click
             self.plant_bombs(self.y_max,self.x_max)
-        else:                               # Case for others clicks
+        else:                                       # Case for others clicks
             self.check_bomb(self.x,self.y)
     
-    def flag(self):                                 # Function to check if there is a flag/question mark or not and then show it
+    def flag(self):
         self.pos_case()
-        if self.Matrice_case[self.y][self.x] == ('0' or '1' or '2' or '3' or '4' or '5' or '6' or '7' or '8' or 'X'):
-            if self.flag_var == 0:
-                self.screen.blit(self.image_flag, ((self.MARGIN + self.WIDTH) * self.x + self.MARGIN, (self.MARGIN + self.HEIGHT) * self.y + self.MARGIN))
+        
+        # Check if the case already has a flag or question mark
+        if self.Matrice_case[self.y][self.x] in ['F', '?']:
+            if self.Matrice_case[self.y][self.x] == 'F':  # If it's a flag, change to question mark
+                self.screen.blit(self.image_question_mark, ((self.MARGIN + self.WIDTH) * self.x + self.MARGIN, (self.MARGIN + self.HEIGHT) * self.y + self.MARGIN))
                 pygame.display.update()
-                self.flag_var = 1
-            elif self.flag_var == 1:
-                self.question_mark()
-    
+                self.Matrice_case[self.y][self.x] = '?'  # Update the matrix to mark the case with a question mark
+            else:  # If it's a question mark, change to button
+                self.screen.blit(self.image_button, ((self.MARGIN + self.WIDTH) * self.x + self.MARGIN, (self.MARGIN + self.HEIGHT) * self.y + self.MARGIN))
+                pygame.display.update()
+                self.Matrice_case[self.y][self.x] = ''  # Update the matrix to mark the case as a button
+        else:
+            self.screen.blit(self.image_flag, ((self.MARGIN + self.WIDTH) * self.x + self.MARGIN, (self.MARGIN + self.HEIGHT) * self.y + self.MARGIN))
+            pygame.display.update()
+            self.Matrice_case[self.y][self.x] = 'F'  # Update the matrix to mark the case with a flag
+
     def game_over(self):                            # Function in case of defeat
         self.screen.blit(self.image_final_bomb, ((self.MARGIN + self.WIDTH) * self.x + self.MARGIN, (self.MARGIN + self.HEIGHT) * self.y + self.MARGIN))
         pygame.display.update()

@@ -13,13 +13,25 @@ class Difficulty():
         pygame.display.set_caption("Game Menu")
         self.difficulty_choice = ""
 
+        self.play_button = pygame.Rect(self.screen_width // 2 - 250 // 2, 200, 250, 50)                 # Menu button initialization here because if I select outside the buttons i have an error
+        self.difficulty_button = pygame.Rect(self.screen_width // 2 - 250 // 2, 300, 250, 50)
+        self.quit_button = pygame.Rect(self.screen_width // 2 - 250 // 2, 400, 250, 50)
+
+        self.hard_button = pygame.Rect(self.screen_width // 2 - 250 // 2, 150, 250, 50)
+        self.easy_button = pygame.Rect(self.screen_width // 2 - 250 // 2, 50, 250, 50)
+        self.medium_button = pygame.Rect(self.screen_width // 2 - 250 // 2, 100, 250, 50)
+        self.back_button = pygame.Rect(self.screen_width // 2 - 250 // 2, 350, 250, 50)
+
+
+
+
     def main_menu(self):
         screen = pygame.display.set_mode((self.screen_width, self.screen_height))
         screen.fill("black")
 
-        self.play_button = pygame.Rect(self.screen_width // 2 - 250 // 2, 200, 250, 50)                 # Menu button creation
-        self.difficulty_button = pygame.Rect(self.screen_width // 2 - 250 // 2, 300, 250, 50)
-        self.quit_button = pygame.Rect(self.screen_width // 2 - 250 // 2, 400, 250, 50)
+        #self.play_button = pygame.Rect(self.screen_width // 2 - 250 // 2, 200, 250, 50)                 # Menu button creation
+        #self.difficulty_button = pygame.Rect(self.screen_width // 2 - 250 // 2, 300, 250, 50)
+        #self.quit_button = pygame.Rect(self.screen_width // 2 - 250 // 2, 400, 250, 50)
 
         self.custom_font = pygame.font.Font("mine-sweeper.ttf", 36)
 
@@ -71,12 +83,15 @@ class Difficulty():
                         pygame.quit()
                         sys.exit()
                     elif self.hard_button.collidepoint(mouse_pos):
+                        play = 1
                         print("Hard button clicked")
                         self.difficulty_choice = "hard"
                     elif self.easy_button.collidepoint(mouse_pos):
+                        play = 1
                         print("Easy button clicked")
                         self.difficulty_choice = "easy"
                     elif self.medium_button.collidepoint(mouse_pos):
+                        play = 1
                         print("Medium button clicked")
                         self.difficulty_choice = "medium"                   
                     elif self.back_button.collidepoint(mouse_pos):
@@ -103,10 +118,10 @@ class Difficulty():
 
         self.screen.fill(((0,0,0)))
 
-        self.easy_button = pygame.Rect(self.screen_width // 2 - 250 // 2, 50, 250, 50)
-        self.medium_button = pygame.Rect(self.screen_width // 2 - 250 // 2, 100, 250, 50)
-        self.hard_button = pygame.Rect(self.screen_width // 2 - 250 // 2, 150, 250, 50)
-        self.back_button = pygame.Rect(self.screen_width // 2 - 250 // 2, 350, 250, 50)
+        #self.easy_button = pygame.Rect(self.screen_width // 2 - 250 // 2, 50, 250, 50)
+        #self.medium_button = pygame.Rect(self.screen_width // 2 - 250 // 2, 100, 250, 50)
+        #self.hard_button = pygame.Rect(self.screen_width // 2 - 250 // 2, 150, 250, 50)
+        #self.back_button = pygame.Rect(self.screen_width // 2 - 250 // 2, 350, 250, 50)
 
         self.easy_button_text = custom_font.render("EASY", True, (255, 255, 255))
         self.medium_button_text = custom_font.render("MEDIUM", True, (255, 255, 255))
