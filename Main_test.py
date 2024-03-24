@@ -35,6 +35,11 @@ def main(GUI, chosen_difficulty):
                 elif event.button == 1 and timer_started:                                   # Left click and timer started
                     if GUI.x >= 0 and GUI.x < GUI.x_max and GUI.y >= 0 and GUI.y < GUI.y_max:
                         case_instance.clique()
+                    elif GUI.reset_button.collidepoint(pygame.mouse.get_pos()):              # Reset button clicked
+                        print("Reset clicked")
+                        case_instance.reset_game()
+                        timer_started = False
+                        GUI.reset_game()
                     else:
                         break
                 elif event.button == 3:  # Right click
@@ -42,7 +47,7 @@ def main(GUI, chosen_difficulty):
                         case_instance.flag()
                     else:
                         break
-
+        
         timer_rect = pygame.Rect((GUI.screen_width - 85, GUI.screen_height - 55, 85, 50))   # Clear only the portion of the screen where the timer is displayed
         GUI.screen.fill((0, 0, 0), timer_rect)
 

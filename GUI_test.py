@@ -139,12 +139,23 @@ class GUI():
             for j in range(self.x_max):
                 self.screen.blit(self.image_button, ((self.MARGIN + self.WIDTH) * j + self.MARGIN , (self.MARGIN + self.HEIGHT) * i + self.MARGIN ))                     
         
+        self.reset_button = pygame.Rect(self.screen_width // 2 - self.image_reset.get_width() // 2, self.screen_height - self.image_reset.get_height() - 10, self.image_reset.get_width(), self.image_reset.get_height())
         self.screen.blit(self.image_reset, (self.screen_width // 2 - self.image_reset.get_width() // 2, self.screen_height - self.image_reset.get_height() - 10))  # Position reset button below the grid
         
         self.timer_gui(0)
         #self.cpt_cases_mined()
         pygame.display.update()
         #pygame.display.flip()
+        self.clock.tick(60)                     # limit to 60 FPS
+
+    def reset_game(self):
+        #self.screen.fill("grey")
+        for i in range(self.y_max):
+            for j in range(self.x_max):
+                self.screen.blit(self.image_button, ((self.MARGIN + self.WIDTH) * j + self.MARGIN , (self.MARGIN + self.HEIGHT) * i + self.MARGIN ))                     
+        self.timer_gui(0)
+        #self.cpt_cases_mined()
+        pygame.display.update()
         self.clock.tick(60)                     # limit to 60 FPS
 
 pygame.quit()
