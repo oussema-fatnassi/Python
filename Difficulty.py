@@ -26,10 +26,6 @@ class Difficulty():
         screen = pygame.display.set_mode((self.screen_width, self.screen_height))
         screen.fill("black")
 
-        #self.play_button = pygame.Rect(self.screen_width // 2 - 250 // 2, 200, 250, 50)                 # Menu button creation
-        #self.difficulty_button = pygame.Rect(self.screen_width // 2 - 250 // 2, 300, 250, 50)
-        #self.quit_button = pygame.Rect(self.screen_width // 2 - 250 // 2, 400, 250, 50)
-
         self.custom_font = pygame.font.Font("mine-sweeper.ttf", 36)
 
         self.minesweeper_text = self.custom_font.render("Minesweeper", True, (255, 255, 255))          # Minesweeper text creation
@@ -66,59 +62,30 @@ class Difficulty():
                 if event.type == MOUSEBUTTONDOWN:
                     mouse_pos = event.pos
                     if self.play_button.collidepoint(mouse_pos):
-                        print("Play button clicked")
-                        #if self.difficulty_choice == "":
-                         #   self.difficulty_choice = "easy"
-                        #self.play_game()
                         run = False
-                        print("im false")
                         play = 1
                     elif self.difficulty_button.collidepoint(mouse_pos):
                         self.difficulty_menu()
-                        print("Difficulty button clicked")
                     elif self.quit_button.collidepoint(mouse_pos):
                         pygame.quit()
                         sys.exit()
                     elif self.hard_button.collidepoint(mouse_pos):
                         play = 1
-                        print("Hard button clicked")
                         self.difficulty_choice = "hard"
                     elif self.easy_button.collidepoint(mouse_pos):
                         play = 1
-                        print("Easy button clicked")
                         self.difficulty_choice = "easy"
                     elif self.medium_button.collidepoint(mouse_pos):
                         play = 1
-                        print("Medium button clicked")
                         self.difficulty_choice = "medium"                   
                     elif self.back_button.collidepoint(mouse_pos):
                         self.main_menu()
-                elif event.type == MOUSEMOTION:
-                    if self.play_button.collidepoint(event.pos) or self.difficulty_button.collidepoint(event.pos) or self.quit_button.collidepoint(event.pos):
-                        hovered = True
-                    else:
-                        hovered = False
-                    #print("Hovered:", hovered)
-                    pygame.display.update()
-            if hovered:
-                self.play_button_text_color = (255, 0, 0)
-                
-            else:
-                self.play_button_text_color = (255, 255, 255)
-                
-        print("im out of loop")
 
     def difficulty_menu(self):                          # Difficulty menu
-        print("Difficulty menu")
         pygame.display.set_caption("Difficulty Menu")
         custom_font = pygame.font.Font("mine-sweeper.ttf", 36)
 
         self.screen.fill(((0,0,0)))
-
-        #self.easy_button = pygame.Rect(self.screen_width // 2 - 250 // 2, 50, 250, 50)
-        #self.medium_button = pygame.Rect(self.screen_width // 2 - 250 // 2, 100, 250, 50)
-        #self.hard_button = pygame.Rect(self.screen_width // 2 - 250 // 2, 150, 250, 50)
-        #self.back_button = pygame.Rect(self.screen_width // 2 - 250 // 2, 350, 250, 50)
 
         self.easy_button_text = custom_font.render("EASY", True, (255, 255, 255))
         self.medium_button_text = custom_font.render("MEDIUM", True, (255, 255, 255))
@@ -136,6 +103,3 @@ class Difficulty():
         self.screen.blit(self.back_button_text, (self.back_button.x + self.back_button.width // 2 - self.back_button_text.get_width() // 2, self.back_button.y + self.back_button.height // 2 - self.back_button_text.get_height() // 2))
        
         pygame.display.update()
-
-#Difficulty = Difficulty()
-#Difficulty.main_menu()

@@ -9,7 +9,6 @@ class GUI():
         self.difficulty = ""              
         self.screen_width = 0
         self.screen_height = 0  
-        #self.screen = pygame.display.set_mode((self.screen_width, self.screen_height))
         pygame.display.set_caption("MINESWEEPER")
         self.clock = pygame.time.Clock()
         self.running = True
@@ -31,7 +30,7 @@ class GUI():
         clock = pygame.time.Clock()
         
         self.screen = pygame.display.set_mode((self.screen_width, self.screen_height))
-
+        self.font = pygame.font.Font("DS-DIGIT.TTF", 50)
 
         self.Matrice_case = []                                  # Initialisation of the grid
         for row in range(self.y_max): 
@@ -82,16 +81,19 @@ class GUI():
         font = pygame.font.Font("DS-DIGIT.TTF", 50)
         text = font.render(time_str, True, self.RED)
         text_rect = text.get_rect(center=(self.screen_width -45, self.screen_height -30))  # Positionnement du timer
-        #self.screen.fill(self.BLACK)
+        self.screen.fill((0, 0, 0), text_rect)
         self.screen.blit(text, text_rect)
         pygame.display.update(text_rect)
 
-    def num_cpt_cases_mined(self):
-        font = pygame.font.Font("DS-DIGIT.TTF", 50)
-        text_cpt_cases_mined = font.render(str(self.cpt_cases_mined), True, self.RED)
-        rect_cpt_cases_mined = text_cpt_cases_mined.get_rect(center=(self.screen_width +45, self.screen_height -30))  # CONTROL THE VALUES, MAYBE CORRECTION NEEDED
-        self.screen.blit(text_cpt_cases_mined, rect_cpt_cases_mined)
-        pygame.display.update(rect_cpt_cases_mined)
+    def cases_mined_gui(self, bombs_planted):
+        self.bombs_planted = self.cpt_cases_mined
+        self.draw_bombs_planted()
+
+    def draw_bombs_planted(self):
+        text_surface = self.font.render(f"{self.bombs_planted:03d}", True, (255, 0, 0))
+        text_rect = text_surface.get_rect()
+        text_rect.bottomleft = (10, self.screen_height - 10)
+        self.screen.blit(text_surface, text_rect)
 
     def select_difficulty(self,difficulty_choice):
         if difficulty_choice == "easy":
@@ -99,25 +101,21 @@ class GUI():
             self.y_max = 9
             self.screen_width = 270
             self.screen_height = 330    
-            print("im in easy init grid")
         elif difficulty_choice == "medium":
             self.x_max = 16
             self.y_max = 16
             self.screen_width = 480
             self.screen_height = 540
-            print("im in medium init grid")
         elif difficulty_choice == "hard":
             self.x_max = 30
             self.y_max = 16
             self.screen_width = 900
             self.screen_height = 540
-            print("im in hard init grid")
         else:
            self.x_max = 9
            self.y_max = 9
            self.screen_width = 270
            self.screen_height = 330  
-           print("im in else init grid")
 
     def return_choice(self, difficulty):
         if difficulty == "easy":
@@ -142,6 +140,8 @@ class GUI():
         self.screen.blit(self.image_reset, (self.screen_width // 2 - self.image_reset.get_width() // 2, self.screen_height - self.image_reset.get_height() - 10))  # Position reset button below the grid
         
         self.timer_gui(0)
+        self.cases_mined_gui(self.cpt_cases_mined)
+        self.draw_bombs_planted()
         pygame.display.update()
         self.clock.tick(60)                     # limit to 60 FPS
 
@@ -155,7 +155,7 @@ class GUI():
         self.cpt_cases_mined = 0                    # Reinitialisation of the variables
         self.cpt_cases_demined = 0
         self.first_click = False
-        self.start_time = 0
+        #self.start_time = 0
 
         for i in range(self.y_max):                 # Redraw the grid and reset button
             for j in range(self.x_max):
