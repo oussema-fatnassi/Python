@@ -46,7 +46,6 @@ class Difficulty():
         
     def click_controller(self):                                                                         # Controlls all the interactions with the buttons            
 
-        hovered = False
         play = 0
         run = True
         while run:
