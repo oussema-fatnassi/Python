@@ -15,6 +15,8 @@ class GUI():
         self.WIDTH = 30
         self.HEIGHT = 30
         self.MARGIN = 0
+        self.GAME_OVER = False
+        self.WIN = False
 
         self.x = 0                                              # Position of the case
         self.y = 0
@@ -149,7 +151,6 @@ class GUI():
         self.screen.blit(self.image_reset, (self.screen_width // 2 - self.image_reset.get_width() // 2, self.screen_height - self.image_reset.get_height() - 10))  # Position reset button below the grid
         
         self.timer_gui(0)
-        #self.cases_mined_gui(0)
         pygame.display.update()
         self.clock.tick(60)                     # limit to 60 FPS
 
@@ -164,7 +165,7 @@ class GUI():
         self.cpt_cases_demined = 0
         self.first_click = False
         self.update_bomb_count(0)
-        #self.start_time = 0
+        self.start_time = 0
 
         for i in range(self.y_max):                 # Redraw the grid and reset button
             for j in range(self.x_max):

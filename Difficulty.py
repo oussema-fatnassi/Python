@@ -11,24 +11,21 @@ class Difficulty():
         self.screen_height = 700
         self.screen = pygame.display.set_mode((self.screen_width, self.screen_height))
         pygame.display.set_caption("Game Menu")
-        self.difficulty_choice = ""
-
-        self.play_button = pygame.Rect(self.screen_width // 2 - 250 // 2, 200, 250, 50)                 # Menu button initialization here because if I select outside the buttons i have an error
+        self.difficulty_choice = ""                                                  
+        self.play_button = pygame.Rect(self.screen_width // 2 - 250 // 2, 200, 250, 50)                 # Creation of all the button in the main menu and the difficulty menu      
         self.difficulty_button = pygame.Rect(self.screen_width // 2 - 250 // 2, 300, 250, 50)
         self.quit_button = pygame.Rect(self.screen_width // 2 - 250 // 2, 400, 250, 50)
-
         self.hard_button = pygame.Rect(self.screen_width // 2 - 250 // 2, 150, 250, 50)
         self.easy_button = pygame.Rect(self.screen_width // 2 - 250 // 2, 50, 250, 50)
         self.medium_button = pygame.Rect(self.screen_width // 2 - 250 // 2, 100, 250, 50)
         self.back_button = pygame.Rect(self.screen_width // 2 - 250 // 2, 350, 250, 50)
 
-    def main_menu(self):
+    def main_menu(self):                                                                                # Main menu                 
         screen = pygame.display.set_mode((self.screen_width, self.screen_height))
         screen.fill("black")
 
-        self.custom_font = pygame.font.Font("mine-sweeper.ttf", 36)
-
-        self.minesweeper_text = self.custom_font.render("Minesweeper", True, (255, 255, 255))          # Minesweeper text creation
+        self.custom_font = pygame.font.Font("mine-sweeper.ttf", 36)                                     # Font initialization and button text rendering
+        self.minesweeper_text = self.custom_font.render("Minesweeper", True, (255, 255, 255))          
         self.minesweeper_text = pygame.transform.scale(self.minesweeper_text, (350, 100))
         self.play_button_text = self.custom_font.render("PLAY", True, (255, 255, 255))
         self.difficulty_button_text = self.custom_font.render("DIFFICULTY", True, (255, 255, 255))
@@ -47,7 +44,7 @@ class Difficulty():
         pygame.display.update()
         self.click_controller()
         
-    def click_controller(self):                 
+    def click_controller(self):                                                                         # Controlls all the interactions with the buttons            
 
         hovered = False
         play = 0
@@ -81,13 +78,12 @@ class Difficulty():
                     elif self.back_button.collidepoint(mouse_pos):
                         self.main_menu()
 
-    def difficulty_menu(self):                          # Difficulty menu
+    def difficulty_menu(self):                                                                          # Difficulty menu
         pygame.display.set_caption("Difficulty Menu")
         custom_font = pygame.font.Font("mine-sweeper.ttf", 36)
 
         self.screen.fill(((0,0,0)))
-
-        self.easy_button_text = custom_font.render("EASY", True, (255, 255, 255))
+        self.easy_button_text = custom_font.render("EASY", True, (255, 255, 255))                       # Button text rendering and button creation
         self.medium_button_text = custom_font.render("MEDIUM", True, (255, 255, 255))
         self.hard_button_text = custom_font.render("HARD", True, (255, 255, 255))
         self.back_button_text = custom_font.render("BACK", True, (255, 255, 255))

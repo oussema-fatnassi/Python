@@ -1,7 +1,7 @@
 import random
 import pygame
 from pygame.locals import *
-from GUI_test import GUI
+from GUI import GUI
 from Difficulty import Difficulty
 
 class Case(GUI):
@@ -9,14 +9,8 @@ class Case(GUI):
     def __init__(self, chosen_difficulty):                                          # Receive chosen difficulty level
         super().__init__()
         self.load_images()
-        self.flag_var = 0
-        self.question_mark_var = 0
         self.chosen_difficulty = chosen_difficulty                                  # Store chosen difficulty level
         self.init_grid()                                                            # Initialize grid based on difficulty level
-        self.game_lost = False                                                      # Variable to check if game is lost
-        self.game_won = False                                                       # Variable to check if game is won
-        self.game_state = "running"
-        self.bomb_count = 0                                                         # Variable to store number of bombs
 
     def init_grid(self):
         if self.chosen_difficulty == "easy":                                        # Initialize other variables for easy difficulty
@@ -73,8 +67,13 @@ class Case(GUI):
         if self.cpt_cases_mined == 0:               # Case for the first click
             self.plant_bombs(self.y_max,self.x_max)
         else:                                       # Case for others clicks
-            self.check_victory()
-            self.check_bomb(self.x,self.y)
+            if self.WIN == True or self.GAME_OVER == True:
+                self.WIN = False
+                self.GAME_OVER = False
+                self.reset_game()
+            else:
+                self.check_victory()
+                self.check_bomb(self.x,self.y)
     
     def flag(self):
         self.pos_case()
@@ -161,6 +160,7 @@ class Case(GUI):
                 if self.Matrice_case[i][j] == 'X':
                     self.show(j,i)
         self.game_state = "lost"
+        self.GAME_OVER = True
 
     def count_bombs(self):
         bomb_count = 0
@@ -173,6 +173,7 @@ class Case(GUI):
     def game_win(self):                             # Function in case of victory
         print("Test victoire")
         self.game_state = "won"
+        self.WIN = True
 
     def is_game_over(self):                         # Function to check if the game is over
         return self.game_state == "lost" or self.game_state == "won"      

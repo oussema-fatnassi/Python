@@ -15,8 +15,9 @@ def main(GUI, chosen_difficulty):
     timer_started = False
     start_timer = 0
     bomb_count = 0
+    game_over = False
 
-    while GUI.running:
+    while GUI.running :
         GUI.pos_case()
 
         for event in pygame.event.get():
@@ -41,8 +42,7 @@ def main(GUI, chosen_difficulty):
                         case_instance.clique()
                     elif GUI.reset_button.collidepoint(pygame.mouse.get_pos()):
                         case_instance.reset_game()
-                        timer_started = False
-                        GUI.reset_game()
+                        timer_started = False 
                     else:
                         break
                 elif event.button == 3:  # Right click
