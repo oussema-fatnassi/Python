@@ -60,7 +60,6 @@ class Case(GUI):
             for j in range(self.x_max):
                 if self.Matrice_case[i][j] == '9':
                     cpt_cases += 1
-        print(cpt_cases, " / ", self.cpt_cases_demined)
         if cpt_cases == self.cpt_cases_demined:                                         # If the number of cases discovered is equal to the number of cases without bomb then the player wins
             self.game_win()
     
@@ -69,8 +68,13 @@ class Case(GUI):
         if self.cpt_cases_mined == 0:               # Case for the first click
             self.plant_bombs(self.y_max,self.x_max)
         else:                                       # Case for others clicks
-            self.check_victory()
-            self.check_bomb(self.x,self.y)
+            if self.WIN == True or self.GAME_OVER == True:
+                self.WIN = False
+                self.GAME_OVER = False
+                self.reset_game()
+            else:
+                self.check_victory()
+                self.check_bomb(self.x,self.y)
     
     def flag(self):
         self.pos_case()
@@ -149,16 +153,15 @@ class Case(GUI):
     def game_over(self):                            # Function in case of defeat
         self.screen.blit(self.image_final_bomb, ((self.MARGIN + self.WIDTH) * self.x + self.MARGIN, (self.MARGIN + self.HEIGHT) * self.y + self.MARGIN))
         pygame.display.update()
-        self.game_lost = True                       # When the game is over it shows all the bombs
         for i in range(self.y_max):
             for j in range(self.x_max):
                 if self.Matrice_case[i][j] == 'X':
                     self.show(j,i)
+        self.GAME_OVER = True                       # When the game is over it shows all the bombs and the player can't play anymore
 
     def game_win(self):                             # Function in case of victory
-        print("Test victoire")
-        
-    
+        self.WIN = True                             # When the player wins he can't play anymore
+   
     def plant_bombs(self,y,x):                      # Function to plant the bombs at the beginning
         self.pos_case()
         for i in range(y):                          # It put a value of '.' or 'X' in all the cases
@@ -202,25 +205,25 @@ class Case(GUI):
                         
     def show(self,x,y):                             # Function to show an image corresponding to the value of the chosen case
         a = self.Matrice_case[y][x]
-        if a == '0':
+        if a == ('0' or 'F0' or '?0'):
             self.screen.blit(self.image_empty, ((self.MARGIN + self.WIDTH) * x + self.MARGIN , (self.MARGIN + self.HEIGHT) * y + self.MARGIN ))
-        elif a == '1':
+        elif a == ('1' or 'F1' or '?1'):
             self.screen.blit(self.image1, ((self.MARGIN + self.WIDTH) * x + self.MARGIN , (self.MARGIN + self.HEIGHT) * y + self.MARGIN ))
-        elif a == '2':
+        elif a == ('2' or 'F2' or '?2'):
             self.screen.blit(self.image2, ((self.MARGIN + self.WIDTH) * x + self.MARGIN , (self.MARGIN + self.HEIGHT) * y + self.MARGIN ))
-        elif a == '3':
+        elif a == ('3' or 'F3' or '?3'):
             self.screen.blit(self.image3, ((self.MARGIN + self.WIDTH) * x + self.MARGIN , (self.MARGIN + self.HEIGHT) * y + self.MARGIN ))
-        elif a == '4':
+        elif a == ('4' or 'F4' or '?4'):
             self.screen.blit(self.image4, ((self.MARGIN + self.WIDTH) * x + self.MARGIN , (self.MARGIN + self.HEIGHT) * y + self.MARGIN ))
-        elif a == '5':
+        elif a == ('5' or 'F5' or '?5'):
             self.screen.blit(self.image5, ((self.MARGIN + self.WIDTH) * x + self.MARGIN , (self.MARGIN + self.HEIGHT) * y + self.MARGIN ))
-        elif a == '6':
+        elif a == ('6' or 'F6' or '?6'):
             self.screen.blit(self.image6, ((self.MARGIN + self.WIDTH) * x + self.MARGIN , (self.MARGIN + self.HEIGHT) * y + self.MARGIN ))
-        elif a == '7':
+        elif a == ('7' or 'F7' or '?7'):
             self.screen.blit(self.image7, ((self.MARGIN + self.WIDTH) * x + self.MARGIN , (self.MARGIN + self.HEIGHT) * y + self.MARGIN ))
-        elif a == '8':
+        elif a == ('8' or 'F8' or '?8'):
             self.screen.blit(self.image8, ((self.MARGIN + self.WIDTH) * x + self.MARGIN , (self.MARGIN + self.HEIGHT) * y + self.MARGIN ))
-        elif a == 'X':
+        elif a == ('X' or 'FX' or '?X'):
             self.screen.blit(self.image_bomb, ((self.MARGIN + self.WIDTH) * x + self.MARGIN , (self.MARGIN + self.HEIGHT) * y + self.MARGIN ))
         elif a == '9':
             pass
