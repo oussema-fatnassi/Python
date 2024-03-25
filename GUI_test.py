@@ -85,15 +85,33 @@ class GUI():
         self.screen.blit(text, text_rect)
         pygame.display.update(text_rect)
 
-    def cases_mined_gui(self, bombs_planted):
-        self.bombs_planted = self.cpt_cases_mined
-        self.draw_bombs_planted()
+    # def cases_mined_gui(self, bomb_count):
+    #     self.draw_bombs_planted(bomb_count)
 
-    def draw_bombs_planted(self):
-        text_surface = self.font.render(f"{self.bombs_planted:03d}", True, (255, 0, 0))
-        text_rect = text_surface.get_rect()
-        text_rect.bottomleft = (10, self.screen_height - 10)
-        self.screen.blit(text_surface, text_rect)
+    # def draw_bombs_planted(self, bomb_count):
+    #     text_surface = self.font.render(f"{bomb_count:03d}", True, (255, 0, 0))
+    #     text_rect = text_surface.get_rect()
+    #     text_rect.bottomleft = (10, self.screen_height - 10)
+    #     self.screen.blit(text_surface, text_rect)
+
+    def update_bomb_count(self, bomb_count):
+        # Define a rectangle for the bomb count display area
+        bomb_count_rect = pygame.Rect(0, self.screen_height - 50, 85, 45)
+        
+        # Fill the bomb count display area with a background color
+        pygame.draw.rect(self.screen, (0, 0, 0), bomb_count_rect)
+
+        # Update the display for the bomb count area
+        pygame.display.update(bomb_count_rect)
+
+        # Render the bomb count text surface
+        text_surface = self.font.render(f"{bomb_count:03d}", True, (255, 0, 0))
+
+        # Blit the bomb count text surface onto the screen
+        self.screen.blit(text_surface, bomb_count_rect)
+
+        # Update the display for the bomb count text
+        pygame.display.update(bomb_count_rect)
 
     def select_difficulty(self,difficulty_choice):
         if difficulty_choice == "easy":
@@ -140,8 +158,7 @@ class GUI():
         self.screen.blit(self.image_reset, (self.screen_width // 2 - self.image_reset.get_width() // 2, self.screen_height - self.image_reset.get_height() - 10))  # Position reset button below the grid
         
         self.timer_gui(0)
-        self.cases_mined_gui(self.cpt_cases_mined)
-        self.draw_bombs_planted()
+        #self.cases_mined_gui(0)
         pygame.display.update()
         self.clock.tick(60)                     # limit to 60 FPS
 
@@ -155,6 +172,7 @@ class GUI():
         self.cpt_cases_mined = 0                    # Reinitialisation of the variables
         self.cpt_cases_demined = 0
         self.first_click = False
+        self.update_bomb_count(0)
         #self.start_time = 0
 
         for i in range(self.y_max):                 # Redraw the grid and reset button
