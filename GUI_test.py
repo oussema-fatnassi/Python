@@ -80,19 +80,10 @@ class GUI():
         time_str = "{:03d}".format(time // 1000)                # Display the timer
         font = pygame.font.Font("DS-DIGIT.TTF", 50)
         text = font.render(time_str, True, self.RED)
-        text_rect = text.get_rect(center=(self.screen_width -45, self.screen_height -30))  # Positionnement du timer
+        text_rect = text.get_rect(center=(self.screen_width -45, self.screen_height -30))  # Timer position
         self.screen.fill((0, 0, 0), text_rect)
         self.screen.blit(text, text_rect)
         pygame.display.update(text_rect)
-
-    # def cases_mined_gui(self, bomb_count):
-    #     self.draw_bombs_planted(bomb_count)
-
-    # def draw_bombs_planted(self, bomb_count):
-    #     text_surface = self.font.render(f"{bomb_count:03d}", True, (255, 0, 0))
-    #     text_rect = text_surface.get_rect()
-    #     text_rect.bottomleft = (10, self.screen_height - 10)
-    #     self.screen.blit(text_surface, text_rect)
 
     def update_bomb_count(self, bomb_count):
         # Define a rectangle for the bomb count display area

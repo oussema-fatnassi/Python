@@ -62,9 +62,9 @@ def main(GUI, chosen_difficulty):
             GUI.timer_gui(passed_time)
         else:
             GUI.timer_gui(0)
+            GUI.update_bomb_count(0)
         pygame.display.flip()
     pygame.quit()
-
 
 Difficulty_instance = Difficulty()
 Difficulty_instance.main_menu()

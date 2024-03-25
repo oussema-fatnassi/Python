@@ -17,7 +17,6 @@ class Case(GUI):
         self.game_won = False                                                       # Variable to check if game is won
         self.game_state = "running"
         self.bomb_count = 0                                                         # Variable to store number of bombs
-        self.flag_grid = [[False for _ in range(self.x_max)] for _ in range(self.y_max)]  # Initialize flag grid
 
     def init_grid(self):
         if self.chosen_difficulty == "easy":                                        # Initialize other variables for easy difficulty
@@ -79,8 +78,6 @@ class Case(GUI):
     
     def flag(self):
         self.pos_case()
-
-        self.flag_grid[self.y][self.x] = not self.flag_grid[self.y][self.x]  # Change the value of the flag grid
 
         # Check if the case already has a flag or question mark
         if self.Matrice_case[self.y][self.x] in ['F0','F1','F2','F3','F4','F5','F6','F7','F8','FX','?0','?1','?2','?3','?4','?5','?6','?7','?8','?X']:
@@ -169,16 +166,9 @@ class Case(GUI):
         bomb_count = 0
         for row in range(self.y_max):
             for col in range(self.x_max):
-                if self.Matrice_case[row][col] == 'X':
+                if self.Matrice_case[row][col] in ['F0','F1','F2','F3','F4','F5','F6','F7','F8','FX']:
                     bomb_count += 1
-                elif self.flag_grid[row][col]:
-                    bomb_count -= 1
-        return bomb_count
-
-
-
-
-        
+        return self.cpt_cases_mined - bomb_count
 
     def game_win(self):                             # Function in case of victory
         print("Test victoire")
