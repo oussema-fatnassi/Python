@@ -29,7 +29,6 @@ def main(GUI, chosen_difficulty):                                               
                     if GUI.x >= 0 and GUI.x < GUI.x_max and GUI.y >= 0 and GUI.y < GUI.y_max:   # If the click is in the grid we update the bomb count and start the timer 
                         case_instance.clique()
                         bomb_count = case_instance.count_bombs()
-                        print("Bomb count is " + str(bomb_count))
                         GUI.update_bomb_count(bomb_count)                                       # Update bomb count display
                         GUI.running = True
                         start_timer = pygame.time.get_ticks()
@@ -49,7 +48,6 @@ def main(GUI, chosen_difficulty):                                               
                         case_instance.flag()
                         bomb_count = case_instance.count_bombs()
                         GUI.update_bomb_count(bomb_count) 
-                        print("Bomb count is " + str(bomb_count))
                     else:
                         break
         
